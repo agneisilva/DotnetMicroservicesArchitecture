@@ -1,9 +1,15 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
   <ItemGroup>
-    <ProjectReference Include="..\Actio.Common\Actio.Common.csproj" />
+    <ProjectReference Include="..\actio.Common\actio.Common.csproj">
+      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
+    </ProjectReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Handler\" />
+    <Folder Include="Controllers\" />
+  </ItemGroup>
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>

@@ -4,6 +4,12 @@ namespace Actio.Common.Commands
 {
     public class CreateActivity : IAuthenticatedCommand
     {
+        public CreateActivity()
+        {
+            Id = Guid.NewGuid();
+            CreatedAt = DateTime.UtcNow;
+        }
+
         public Guid Id { get; set; }
         public Guid UserId { get;set; }
         public string Category { get; set; }

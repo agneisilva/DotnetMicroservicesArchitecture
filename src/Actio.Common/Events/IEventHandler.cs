@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace actio.Common.Events
 {
-    public interface IEventHandler<in T> where T :  IEvent
+    public interface IEventHandler<in T> where T : IEvent
     {
-        Task Handle(T @event);
+        Task HandleAsync(T @event);
     }
 }
