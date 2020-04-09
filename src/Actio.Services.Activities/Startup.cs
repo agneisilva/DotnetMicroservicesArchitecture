@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using actio.Common.Mongo;
 using actio.services.activities.Handler;
 using Actio.Common.Commands;
 using Actio.Common.RabbitMQ;
@@ -29,6 +30,7 @@ namespace Actio.Services.Activities
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddMongoDB(Configuration);
             services.AddRabbitMQ(Configuration);
             services.AddScoped<ICommandHandler<CreateActivity>, CreateActivityHandler>();
         }
