@@ -1,19 +1,15 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using actio.Common.Mongo;
 using actio.services.activities.Handler;
+using actio.services.Activities.Domain.Repositories;
+using actio.services.Activities.Repositories;
+using actio.services.Activities.Services;
 using Actio.Common.Commands;
 using Actio.Common.RabbitMQ;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 
 namespace Actio.Services.Activities
 {
@@ -33,6 +29,9 @@ namespace Actio.Services.Activities
             services.AddMongoDB(Configuration);
             services.AddRabbitMQ(Configuration);
             services.AddScoped<ICommandHandler<CreateActivity>, CreateActivityHandler>();
+            services.AddScoped<ICategoryRepository, CategoryRepository>();
+            services.AddScoped<IActivityRepository, ActivityRepository>();
+            services.AddScoped<IDatabaseSeeder, CustomMongoSeeder>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -53,6 +52,15 @@ namespace Actio.Services.Activities
             {
                 endpoints.MapControllers();
             });
+
+            using (var serviceScope = app.ApplicationServices.CreateScope())
+            {
+                var services = serviceScope.ServiceProvider;
+
+                services.GetService<IDatabaseInitializer>().InitializeAsync();
+            }
+
+                
         }
     }
 }
