@@ -2,8 +2,6 @@ using RawRabbit;
 using Actio.Common.Commands;
 using Actio.Common.Events;
 using System.Threading.Tasks;
-using actio.Common.Events;
-using RawRabbit.Pipe;
 using System.Reflection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

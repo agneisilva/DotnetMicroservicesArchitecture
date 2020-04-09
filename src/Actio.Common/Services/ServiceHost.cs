@@ -7,6 +7,7 @@ using Actio.Common.Commands;
 using Actio.Common.Events;
 using Actio.Common.RabbitMQ;
 using actio.Common.Events;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Actio.Common.Services
 {
@@ -21,21 +22,22 @@ namespace Actio.Common.Services
 
         public void Run() => _webHost.Run();
 
-        public static HostBuilder Create<Startup>(string[] args) where Startup : class{
-            Console.Title = typeof(Startup).Namespace;
+        public static HostBuilder Create<TStartup>(string[] args) where TStartup : class
+        {
+            Console.Title = typeof(TStartup).Namespace;
             var config = new ConfigurationBuilder()
-                        .AddEnvironmentVariables()
-                        .AddCommandLine(args)
-                        .Build();
-            
-            var webhostbuilder = WebHost.CreateDefaultBuilder(args).
-                                    UseConfiguration(config).
-                                    UseStartup<Startup>();
+                .AddEnvironmentVariables()
+                .AddCommandLine(args)
+                .Build();
+            var webHostBuilder = WebHost.CreateDefaultBuilder(args)
+                .UseConfiguration(config)
+                .UseStartup<TStartup>();
 
-            return new HostBuilder(webhostbuilder.Build());
+            return new HostBuilder(webHostBuilder.Build());
         }
 
-        public abstract class BuilderBase {
+        public abstract class BuilderBase
+        {
             public abstract ServiceHost Build();
         }
 
@@ -44,13 +46,12 @@ namespace Actio.Common.Services
             private readonly IWebHost _webHost;
             private IBusClient _bus;
 
-
             public HostBuilder(IWebHost webHost)
             {
                 _webHost = webHost;
             }
 
-            public BusBuilder UseRabbitMQ()
+            public BusBuilder UseRabbitMq()
             {
                 _bus = (IBusClient)_webHost.Services.GetService(typeof(IBusClient));
 
@@ -63,9 +64,10 @@ namespace Actio.Common.Services
             }
         }
 
-        public class BusBuilder : BuilderBase{
+        public class BusBuilder : BuilderBase
+        {
             private readonly IWebHost _webHost;
-            private readonly IBusClient _bus;
+            private IBusClient _bus;
 
             public BusBuilder(IWebHost webHost, IBusClient bus)
             {
@@ -73,20 +75,30 @@ namespace Actio.Common.Services
                 _bus = bus;
             }
 
-            public BusBuilder SubscriberToCommand<TCommand>() where TCommand : ICommand
+            public BusBuilder SubscribeToCommand<TCommand>() where TCommand : ICommand
             {
-                var handler = (ICommandHandler<ICommand>)_webHost.Services.GetService(typeof(ICommandHandler<ICommand>));
-                _bus.WithCommandHandlerAsync(handler);
+                var serviceScopeFactory = _webHost.Services.GetService<IServiceScopeFactory>();
+                using (var scope = serviceScopeFactory.CreateScope())
+                {
+                    var handler = (ICommandHandler<TCommand>)scope.ServiceProvider.GetService(typeof(ICommandHandler<TCommand>));
+                    _bus.WithCommandHandlerAsync(handler);
+                }
+
                 return this;
             }
 
-            public BusBuilder SubscriberToEvent<TEvent>() where TEvent : IEvent
+            public BusBuilder SubscribeToEvent<TEvent>() where TEvent : IEvent
             {
-                var handler =   (actio.Common.Events.IEventHandler<IEvent>)_webHost.Services.GetService(typeof(actio.Common.Events.IEventHandler<IEvent>));
-                _bus.WithEventHandlerAsync(handler);
+                var serviceScopeFactory = _webHost.Services.GetService<IServiceScopeFactory>();
+                using (var scope = serviceScopeFactory.CreateScope())
+                {
+                    var handler = (IEventHandler<TEvent>)scope.ServiceProvider
+                    .GetService(typeof(IEventHandler<TEvent>));
+                    _bus.WithEventHandlerAsync(handler);
+                }
                 return this;
             }
-            
+
             public override ServiceHost Build()
             {
                 return new ServiceHost(_webHost);

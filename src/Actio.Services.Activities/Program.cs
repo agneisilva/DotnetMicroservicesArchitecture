@@ -17,8 +17,8 @@ namespace Actio.Services.Activities
         public static void Main(string[] args)
         {
             ServiceHost.Create<Startup>(args)
-                .UseRabbitMQ()
-                .SubscriberToCommand<CreateActivity>()
+                .UseRabbitMq()
+                .SubscribeToCommand<CreateActivity>()
                 .Build()
                 .Run();
         }
