@@ -16,5 +16,6 @@
 
   <ItemGroup>
     <Folder Include="Mongo\" />
+    <Folder Include="Exceptions\" />
   </ItemGroup>
 </Project>
