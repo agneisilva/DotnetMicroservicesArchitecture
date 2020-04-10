@@ -1,10 +1,9 @@
 ﻿using System;
 namespace actio.services.identity.Domain.Services
 {
-    public class IEncrypter
+    public interface IEncrypter
     {
-        public IEncrypter()
-        {
-        }
+        string GetSalt();
+        string GetHash(string value, string salt);
     }
 }
