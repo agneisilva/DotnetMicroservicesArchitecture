@@ -19,13 +19,14 @@ namespace actio.Common.Events
                                Guid userId, 
                                string category, 
                                string name, 
-                               string description) {
+                               string description,
+                               DateTime createdAt) {
             Id = id;
             UserId = userId;
             Category = category;
             Name = name;
             Description = description;
-            CreatedAt = DateTime.Now;
+            CreatedAt = createdAt;
         }
     }
 }
