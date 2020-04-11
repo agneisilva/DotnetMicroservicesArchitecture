@@ -1,8 +1,10 @@
+using actio.Common.Auth;
 using actio.Common.Mongo;
 using actio.services.identity.Domain.Repositories;
 using actio.services.identity.Domain.Services;
 using actio.services.identity.Handler;
 using actio.services.identity.Repositories;
+using actio.services.identity.Services;
 using Actio.Common.Commands;
 using Actio.Common.RabbitMQ;
 using Microsoft.AspNetCore.Builder;
@@ -28,9 +30,10 @@ namespace Actio.Services.Identity
             services.AddControllers();
             services.AddMongoDB(Configuration);
             services.AddRabbitMQ(Configuration);
+            services.AddJwt(Configuration);
             services.AddScoped<ICommandHandler<CreateUser>, CreateUserHandler>();
             services.AddScoped<IUserRepository, UserRepository>();
-            //services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IUserService, UserService>();
             services.AddSingleton<IEncrypter, Encrypter>();
         }
 

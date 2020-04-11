@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using actio.API.Handler;
+using actio.Common.Auth;
 using actio.Common.Events;
 using Actio.Common.RabbitMQ;
 using Microsoft.AspNetCore.Builder;
@@ -30,6 +31,7 @@ namespace Actio.API
         {
             services.AddControllers();
             services.AddRabbitMQ(Configuration);
+            services.AddJwt(Configuration);
             services.AddScoped<IEventHandler<ActivityCreated>, ActivityCreatedHandler>();
         }
 

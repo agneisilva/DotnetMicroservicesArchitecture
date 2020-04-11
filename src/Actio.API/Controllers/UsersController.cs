@@ -5,7 +5,7 @@ using RawRabbit;
 
 namespace actio.API.Controllers
 {
-    [Route("[controller]")]
+    [Route("users")]
     public class UsersController : Controller
     {
         private readonly IBusClient _busClient;
@@ -15,8 +15,8 @@ namespace actio.API.Controllers
             _busClient = busClient;
         }
 
-        [HttpPost("register")]
-        public async Task<IActionResult> Post([FromBody] CreateUser command)
+        [HttpPost("")]
+        public async Task<IActionResult> Post([FromBody]CreateUser command)
         {
             await _busClient.PublishAsync(command);
 

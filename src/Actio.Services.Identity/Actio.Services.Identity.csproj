@@ -14,6 +14,7 @@
     <Folder Include="Domain\Services\" />
     <Folder Include="Handler\" />
     <Folder Include="Repositories\" />
+    <Folder Include="Services\" />
   </ItemGroup>
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
