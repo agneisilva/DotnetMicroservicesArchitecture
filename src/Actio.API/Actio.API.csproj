@@ -9,6 +9,9 @@
   <ItemGroup>
     <Folder Include="Controllers\" />
     <Folder Include="Handler\" />
+    <Folder Include="Repositories\" />
+    <Folder Include="Domain\" />
+    <Folder Include="Domain\Models\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.1" />

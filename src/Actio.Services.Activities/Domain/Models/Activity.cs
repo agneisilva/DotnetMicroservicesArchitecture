@@ -1,10 +1,12 @@
 ﻿using System;
 using actio.Common.Exceptions;
+using MongoDB.Bson.Serialization.Attributes;
 
 namespace actio.services.Activities.Domain.Models
 {
     public class Activity
     {
+        [BsonId]
         public Guid Id { get; protected set; }
         public string Category { get; protected set; }
         public Guid UserId { get; protected set; }

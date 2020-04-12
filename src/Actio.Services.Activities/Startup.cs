@@ -1,5 +1,6 @@
 using actio.Common.Mongo;
 using actio.services.activities.Handler;
+using actio.services.Activities.Domain.Models;
 using actio.services.Activities.Domain.Repositories;
 using actio.services.Activities.Repositories;
 using actio.services.Activities.Services;
@@ -26,6 +27,7 @@ namespace Actio.Services.Activities
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.RegisterClass();
             services.AddMongoDB(Configuration);
             services.AddRabbitMQ(Configuration);
             services.AddScoped<ICommandHandler<CreateActivity>, CreateActivityHandler>();
