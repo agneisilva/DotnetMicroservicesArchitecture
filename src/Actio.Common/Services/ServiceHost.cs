@@ -1,13 +1,11 @@
-using Microsoft.AspNetCore.Hosting;
 using System;
-using Microsoft.Extensions.Configuration;
-using Microsoft.AspNetCore;
-using RawRabbit;
 using Actio.Common.Commands;
 using Actio.Common.Events;
-using Actio.Common.RabbitMQ;
-using actio.Common.Events;
-using Microsoft.Extensions.DependencyInjection;
+using Actio.Common.RabbitMq;
+using Microsoft.AspNetCore;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
+using RawRabbit;
 
 namespace Actio.Common.Services
 {
@@ -36,7 +34,7 @@ namespace Actio.Common.Services
             return new HostBuilder(webHostBuilder.Build());
         }
 
-        public abstract class BuilderBase
+        public abstract class BuilderBase 
         {
             public abstract ServiceHost Build();
         }
@@ -67,7 +65,7 @@ namespace Actio.Common.Services
         public class BusBuilder : BuilderBase
         {
             private readonly IWebHost _webHost;
-            private IBusClient _bus;
+            private IBusClient _bus; 
 
             public BusBuilder(IWebHost webHost, IBusClient bus)
             {
@@ -77,25 +75,19 @@ namespace Actio.Common.Services
 
             public BusBuilder SubscribeToCommand<TCommand>() where TCommand : ICommand
             {
-                var serviceScopeFactory = _webHost.Services.GetService<IServiceScopeFactory>();
-                using (var scope = serviceScopeFactory.CreateScope())
-                {
-                    var handler = (ICommandHandler<TCommand>)scope.ServiceProvider.GetService(typeof(ICommandHandler<TCommand>));
-                    _bus.WithCommandHandlerAsync(handler);
-                }
+                var handler = (ICommandHandler<TCommand>)_webHost.Services
+                    .GetService(typeof(ICommandHandler<TCommand>));
+                _bus.WithCommandHandlerAsync(handler);
 
                 return this;
             }
 
             public BusBuilder SubscribeToEvent<TEvent>() where TEvent : IEvent
             {
-                var serviceScopeFactory = _webHost.Services.GetService<IServiceScopeFactory>();
-                using (var scope = serviceScopeFactory.CreateScope())
-                {
-                    var handler = (IEventHandler<TEvent>)scope.ServiceProvider
+                var handler = (IEventHandler<TEvent>)_webHost.Services
                     .GetService(typeof(IEventHandler<TEvent>));
-                    _bus.WithEventHandlerAsync(handler);
-                }
+                _bus.WithEventHandlerAsync(handler);
+
                 return this;
             }
 

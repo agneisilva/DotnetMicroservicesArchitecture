@@ -1,14 +1,14 @@
-﻿using System;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
-using actio.API.Repositories;
+using Actio.Api.Repositories;
 using Actio.Common.Commands;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RawRabbit;
 
-namespace actio.API.Controllers
+namespace Actio.Api.Controllers
 {
     [Route("[controller]")]
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
@@ -24,13 +24,13 @@ namespace actio.API.Controllers
             _repository = repository;
         }
 
-        [HttpGet("")]     
+        [HttpGet("")]
         public async Task<IActionResult> Get()
         {
             var activities = await _repository
                 .BrowseAsync(Guid.Parse(User.Identity.Name));
 
-            return Json(activities.Select(x => new { x.Id, x.Name, x.Category, x.CreatedAt }));
+            return Json(activities.Select(x => new {x.Id, x.Name, x.Category, x.CreatedAt}));
         }
 
         [HttpGet("{id}")]

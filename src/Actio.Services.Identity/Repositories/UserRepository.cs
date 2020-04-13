@@ -1,11 +1,11 @@
-﻿using System;
+using System;
 using System.Threading.Tasks;
-using actio.services.identity.Domain.Models;
+using Actio.Services.Identity.Domain.Models;
+using Actio.Services.Identity.Domain.Repositories;
 using MongoDB.Driver;
-using System.Linq;
-using actio.services.identity.Domain.Repositories;
+using MongoDB.Driver.Linq;
 
-namespace actio.services.identity.Repositories
+namespace Actio.Services.Identity.Repositories
 {
     public class UserRepository : IUserRepository
     {
@@ -16,19 +16,19 @@ namespace actio.services.identity.Repositories
         }
 
         public async Task<User> GetAsync(Guid id)
-            => await Task.FromResult(Collection
+            => await Collection
                 .AsQueryable()
-                .FirstOrDefault(x => x.Id == id));
+                .FirstOrDefaultAsync(x => x.Id == id);
 
         public async Task<User> GetAsync(string email)
-            => await Task.FromResult(Collection
+            => await Collection
                 .AsQueryable()
-                .FirstOrDefault(x => x.Email == email.ToLowerInvariant()));
+                .FirstOrDefaultAsync(x => x.Email == email.ToLowerInvariant());
 
         public async Task AddAsync(User user)
             => await Collection.InsertOneAsync(user);
 
-        private IMongoCollection<User> Collection
+        private IMongoCollection<User> Collection 
             => _database.GetCollection<User>("Users");
     }
 }

@@ -1,11 +1,8 @@
-﻿using System;
-using Microsoft.Extensions.DependencyInjection;
 using RawRabbit.Configuration;
 
-namespace actio.Common.RabbitMQ
+namespace Actio.Common.RabbitMq
 {
-    public class RabbitMQOptions : RawRabbitConfiguration
+    public class RabbitMqOptions : RawRabbitConfiguration
     {
-        
     }
 }

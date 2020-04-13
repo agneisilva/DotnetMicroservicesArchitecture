@@ -1,7 +1,6 @@
-﻿using System;
 using Microsoft.AspNetCore.Mvc;
 
-namespace actio.services.identity.Controllers
+namespace Actio.Services.Identity.Controllers
 {
     [Route("")]
     public class HomeController : Controller

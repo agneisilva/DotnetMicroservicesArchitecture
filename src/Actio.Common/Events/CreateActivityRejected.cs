@@ -1,5 +1,6 @@
-﻿using System;
-namespace actio.Common.Events
+using System;
+
+namespace Actio.Common.Events
 {
     public class CreateActivityRejected : IRejectedEvent
     {
@@ -11,7 +12,7 @@ namespace actio.Common.Events
         {
         }
 
-        public CreateActivityRejected(Guid id,
+        public CreateActivityRejected(Guid id, 
             string reason, string code)
         {
             Id = id;

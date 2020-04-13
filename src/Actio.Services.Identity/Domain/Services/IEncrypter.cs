@@ -1,5 +1,4 @@
-﻿using System;
-namespace actio.services.identity.Domain.Services
+namespace Actio.Services.Identity.Domain.Services
 {
     public interface IEncrypter
     {

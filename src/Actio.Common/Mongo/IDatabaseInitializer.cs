@@ -1,6 +1,6 @@
-﻿using System.Threading.Tasks;
+using System.Threading.Tasks;
 
-namespace actio.Common.Mongo
+namespace Actio.Common.Mongo
 {
     public interface IDatabaseInitializer
     {

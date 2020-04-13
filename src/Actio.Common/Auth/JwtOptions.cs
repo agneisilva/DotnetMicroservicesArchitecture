@@ -1,5 +1,4 @@
-﻿using System;
-namespace actio.Common.Auth
+namespace Actio.Common.Auth
 {
     public class JwtOptions
     {

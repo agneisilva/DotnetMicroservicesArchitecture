@@ -1,14 +1,8 @@
-﻿using Actio.Common.Events;
-using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace actio.Common.Events
+namespace Actio.Common.Events
 {
     public interface IRejectedEvent : IEvent
     {
-        string Reason { get; }
-        string Code { get; }
-
+         string Reason { get; }
+         string Code { get; }
     }
 }

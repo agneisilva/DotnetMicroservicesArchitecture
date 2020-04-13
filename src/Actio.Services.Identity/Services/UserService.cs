@@ -1,12 +1,12 @@
-﻿using System;
+using System;
 using System.Threading.Tasks;
-using actio.Common.Auth;
-using actio.Common.Exceptions;
-using actio.services.identity.Domain.Models;
-using actio.services.identity.Domain.Repositories;
-using actio.services.identity.Domain.Services;
+using Actio.Common.Auth;
+using Actio.Common.Exceptions;
+using Actio.Services.Identity.Domain.Models;
+using Actio.Services.Identity.Domain.Repositories;
+using Actio.Services.Identity.Domain.Services;
 
-namespace actio.services.identity.Services
+namespace Actio.Services.Identity.Services
 {
     public class UserService : IUserService
     {
@@ -22,7 +22,6 @@ namespace actio.services.identity.Services
             _encrypter = encrypter;
             _jwtHandler = jwtHandler;
         }
-
 
         public async Task RegisterAsync(string email, string password, string name)
         {

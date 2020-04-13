@@ -1,8 +1,7 @@
 namespace Actio.Common.Events
 {
-    //Marker Interface
+    //Marker interface
     public interface IEvent
     {
-         
     }
 }

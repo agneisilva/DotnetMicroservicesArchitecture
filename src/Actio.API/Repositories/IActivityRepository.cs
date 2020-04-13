@@ -1,9 +1,9 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using actio.API.Domain.Models;
+using Actio.Api.Models;
 
-namespace actio.API.Repositories
+namespace Actio.Api.Repositories
 {
     public interface IActivityRepository
     {

@@ -1,8 +1,8 @@
-﻿using System.Linq;
+using System.Linq;
 using System.Threading.Tasks;
 using MongoDB.Driver;
 
-namespace actio.Common.Mongo
+namespace Actio.Common.Mongo
 {
     public class MongoSeeder : IDatabaseSeeder
     {
@@ -11,7 +11,7 @@ namespace actio.Common.Mongo
         public MongoSeeder(IMongoDatabase database)
         {
             Database = database;
-        }
+        } 
 
         public async Task SeedAsync()
         {

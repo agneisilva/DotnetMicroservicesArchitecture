@@ -1,10 +1,10 @@
-﻿using System;
+using System;
 using System.Threading.Tasks;
-using actio.API.Domain.Models;
-using actio.API.Repositories;
-using actio.Common.Events;
+using Actio.Api.Models;
+using Actio.Api.Repositories;
+using Actio.Common.Events;
 
-namespace actio.API.Handler
+namespace Actio.Api.Handlers
 {
     public class ActivityCreatedHandler : IEventHandler<ActivityCreated>
     {

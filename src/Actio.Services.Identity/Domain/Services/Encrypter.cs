@@ -1,7 +1,8 @@
-﻿using System;
+using System;
 using System.Security.Cryptography;
+using System.Text;  
 
-namespace actio.services.identity.Domain.Services
+namespace Actio.Services.Identity.Domain.Services
 {
     public class Encrypter : IEncrypter
     {
@@ -27,7 +28,7 @@ namespace actio.services.identity.Domain.Services
 
         private static byte[] GetBytes(string value)
         {
-            var bytes = new byte[value.Length * sizeof(char)];
+            var bytes = new byte[value.Length*sizeof(char)];
             Buffer.BlockCopy(value.ToCharArray(), 0, bytes, 0, bytes.Length);
 
             return bytes;

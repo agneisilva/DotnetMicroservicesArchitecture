@@ -1,23 +1,21 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using actio.API.Handler;
-using actio.API.Repositories;
-using actio.Common.Auth;
-using actio.Common.Events;
-using actio.Common.Mongo;
-using Actio.Common.RabbitMQ;
+using Actio.Api.Handlers;
+using Actio.Api.Repositories;
+using Actio.Common.Auth;
+using Actio.Common.Events;
+using Actio.Common.Mongo;
+using Actio.Common.RabbitMq;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 
-namespace Actio.API
+namespace Actio.Api
 {
     public class Startup
     {
@@ -31,32 +29,24 @@ namespace Actio.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
-            services.AddRabbitMQ(Configuration);
-            services.AddMongoDB(Configuration);
+            services.AddMvc();
             services.AddJwt(Configuration);
+            services.AddRabbitMq(Configuration);
+            services.AddMongoDB(Configuration);
             services.AddScoped<IEventHandler<ActivityCreated>, ActivityCreatedHandler>();
             services.AddScoped<IActivityRepository, ActivityRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
-
-            app.UseHttpsRedirection();
-
-            app.UseRouting();
-
-            app.UseAuthorization();
-
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
+            app.ApplicationServices.GetService<IDatabaseInitializer>().InitializeAsync();
+            app.UseAuthentication();
+            app.UseMvc();
         }
     }
 }

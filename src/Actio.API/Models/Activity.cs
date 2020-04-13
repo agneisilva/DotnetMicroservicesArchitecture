@@ -1,7 +1,6 @@
-﻿using System;
-using actio.Common.Exceptions;
+using System;
 
-namespace actio.API.Domain.Models
+namespace Actio.Api.Models
 {
     public class Activity
     {

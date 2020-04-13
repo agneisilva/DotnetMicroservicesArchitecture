@@ -1,11 +1,9 @@
-﻿using System;
 using System.Threading.Tasks;
-using actio.Common.Auth;
-using actio.services.identity.Services;
 using Actio.Common.Commands;
+using Actio.Services.Identity.Services;
 using Microsoft.AspNetCore.Mvc;
 
-namespace actio.services.identity.Controllers
+namespace Actio.Services.Identity.Controllers
 {
     [Route("")]
     public class AccountController : Controller
@@ -18,7 +16,7 @@ namespace actio.services.identity.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<JsonWebToken> Login([FromBody] AuthenticateUser command)
-            => await _userService.LoginAsync(command.Email, command.Password);
+        public async Task<IActionResult> Login([FromBody] AuthenticateUser command)
+            => Json(await _userService.LoginAsync(command.Email, command.Password));
     }
 }

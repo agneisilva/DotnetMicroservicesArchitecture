@@ -1,13 +1,13 @@
-﻿using System;
+using System;
 using System.Threading.Tasks;
-using actio.Common.Events;
-using actio.Common.Exceptions;
-using actio.services.Activities.Services;
 using Actio.Common.Commands;
+using Actio.Common.Events;
+using Actio.Common.Exceptions;
+using Actio.Services.Activities.Services;
 using Microsoft.Extensions.Logging;
 using RawRabbit;
 
-namespace actio.services.activities.Handler
+namespace Actio.Services.Activities.Handlers
 {
     public class CreateActivityHandler : ICommandHandler<CreateActivity>
     {
@@ -16,7 +16,7 @@ namespace actio.services.activities.Handler
         private readonly IActivityService _activityService;
 
         public CreateActivityHandler(IBusClient busClient,
-            IActivityService activityService,
+            IActivityService activityService, 
             ILogger<CreateActivityHandler> logger)
         {
             _busClient = busClient;
@@ -27,7 +27,7 @@ namespace actio.services.activities.Handler
         public async Task HandleAsync(CreateActivity command)
         {
             _logger.LogInformation($"Creating activity: '{command.Id}' for user: '{command.UserId}'.");
-            try
+            try 
             {
                 await _activityService.AddAsync(command.Id, command.UserId,
                     command.Category, command.Name, command.Description, command.CreatedAt);
@@ -41,13 +41,13 @@ namespace actio.services.activities.Handler
             {
                 _logger.LogError(ex, ex.Message);
                 await _busClient.PublishAsync(new CreateActivityRejected(command.Id,
-                    ex.Message, ex.Code));
+                    ex.Message, ex.Code));                
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, ex.Message);
                 await _busClient.PublishAsync(new CreateActivityRejected(command.Id,
-                    ex.Message, "error"));
+                    ex.Message, "error"));                
             }
         }
     }

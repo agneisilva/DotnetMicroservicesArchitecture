@@ -1,12 +1,12 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using actio.services.Activities.Domain.Models;
-using actio.services.Activities.Domain.Repositories;
+using Actio.Services.Activities.Domain.Models;
+using Actio.Services.Activities.Domain.Repositories;
 using MongoDB.Driver;
+using MongoDB.Driver.Linq;
 
-namespace actio.services.Activities.Repositories
+namespace Actio.Services.Activities.Repositories
 {
     public class CategoryRepository : ICategoryRepository
     {
@@ -18,9 +18,9 @@ namespace actio.services.Activities.Repositories
         }
 
         public async Task<Category> GetAsync(string name)
-            => await Task.FromResult(Collection
+            => await Collection
                 .AsQueryable()
-                .FirstOrDefault(x => x.Name == name.ToLowerInvariant()));
+                .FirstOrDefaultAsync(x => x.Name == name.ToLowerInvariant());
 
         public async Task<IEnumerable<Category>> BrowseAsync()
             => await Collection
@@ -30,7 +30,7 @@ namespace actio.services.Activities.Repositories
         public async Task AddAsync(Category category)
             => await Collection.InsertOneAsync(category);
 
-        private IMongoCollection<Category> Collection
-            => _database.GetCollection<Category>("Categories");
+        private IMongoCollection<Category> Collection 
+            => _database.GetCollection<Category>("Categories");        
     }
 }

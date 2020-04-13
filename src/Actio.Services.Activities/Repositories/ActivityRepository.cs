@@ -1,11 +1,12 @@
-﻿using System;
+using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
-using actio.services.Activities.Domain.Models;
-using actio.services.Activities.Domain.Repositories;
+using Actio.Services.Activities.Domain.Models;
+using Actio.Services.Activities.Domain.Repositories;
 using MongoDB.Driver;
-using System.Linq;
+using MongoDB.Driver.Linq;
 
-namespace actio.services.Activities.Repositories
+namespace Actio.Services.Activities.Repositories
 {
     public class ActivityRepository : IActivityRepository
     {
@@ -17,9 +18,9 @@ namespace actio.services.Activities.Repositories
         }
 
         public async Task<Activity> GetAsync(Guid id)
-            => await Task.FromResult(Collection
+            => await Collection
                 .AsQueryable()
-                .FirstOrDefault(x => x.Id == id));
+                .FirstOrDefaultAsync(x => x.Id == id);
 
         public async Task AddAsync(Activity activity)
             => await Collection.InsertOneAsync(activity);
@@ -27,7 +28,7 @@ namespace actio.services.Activities.Repositories
         public async Task DeleteAsync(Guid id)
             => await Collection.DeleteOneAsync(x => x.Id == id);
 
-        private IMongoCollection<Activity> Collection
+        private IMongoCollection<Activity> Collection 
             => _database.GetCollection<Activity>("Activities");
     }
 }

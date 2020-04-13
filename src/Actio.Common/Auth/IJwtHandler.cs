@@ -1,10 +1,9 @@
-﻿using System;
-using Microsoft.IdentityModel.JsonWebTokens;
+using System;
 
-namespace actio.Common.Auth
+namespace Actio.Common.Auth
 {
     public interface IJwtHandler
     {
-        JsonWebToken Create(Guid userId);
+        JsonWebToken Create(Guid userId);     
     }
 }

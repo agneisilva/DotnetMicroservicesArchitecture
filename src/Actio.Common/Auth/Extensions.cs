@@ -1,10 +1,9 @@
-﻿using System;
 using System.Text;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 
-namespace actio.Common.Auth
+namespace Actio.Common.Auth
 {
     public static class Extensions
     {
@@ -27,6 +26,6 @@ namespace actio.Common.Auth
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(options.SecretKey))
                     };
                 });
-        }
+        }         
     }
 }

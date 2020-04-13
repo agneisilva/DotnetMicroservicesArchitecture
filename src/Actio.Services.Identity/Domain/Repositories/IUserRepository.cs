@@ -1,8 +1,8 @@
-﻿using System;
+using System;
 using System.Threading.Tasks;
-using actio.services.identity.Domain.Models;
+using Actio.Services.Identity.Domain.Models;
 
-namespace actio.services.identity.Domain.Repositories
+namespace Actio.Services.Identity.Domain.Repositories
 {
     public interface IUserRepository
     {

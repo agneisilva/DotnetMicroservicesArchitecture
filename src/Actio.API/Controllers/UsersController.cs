@@ -1,12 +1,12 @@
-﻿using System.Threading.Tasks;
+using System.Threading.Tasks;
 using Actio.Common.Commands;
 using Microsoft.AspNetCore.Mvc;
 using RawRabbit;
 
-namespace actio.API.Controllers
+namespace Actio.Api.Controllers
 {
-    [Route("users")]
-    public class UsersController : Controller
+    [Route("[controller]")]
+    public class UsersController: Controller
     {
         private readonly IBusClient _busClient;
 

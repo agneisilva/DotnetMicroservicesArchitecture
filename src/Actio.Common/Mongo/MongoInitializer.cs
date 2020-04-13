@@ -1,11 +1,11 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Conventions;
 using MongoDB.Driver;
 
-namespace actio.Common.Mongo
+namespace Actio.Common.Mongo
 {
     public class MongoInitializer : IDatabaseInitializer
     {
@@ -14,7 +14,7 @@ namespace actio.Common.Mongo
         private readonly IMongoDatabase _database;
         private readonly IDatabaseSeeder _seeder;
 
-        public MongoInitializer(IMongoDatabase database,
+        public MongoInitializer(IMongoDatabase database, 
             IDatabaseSeeder seeder,
             IOptions<MongoOptions> options)
         {

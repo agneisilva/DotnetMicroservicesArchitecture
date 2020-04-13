@@ -1,6 +1,6 @@
-﻿using System;
+using System;
 
-namespace actio.Common.Exceptions
+namespace Actio.Common.Exceptions
 {
     public class ActioException : Exception
     {
@@ -32,6 +32,6 @@ namespace actio.Common.Exceptions
             : base(string.Format(message, args), innerException)
         {
             Code = code;
-        }
+        }        
     }
 }
